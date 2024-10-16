@@ -1,14 +1,15 @@
 import React from 'react'
-import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from "./Home.jsx"
-import Search from "./Search.jsx"
-import Feed from "./Feed.jsx"
+import Home from "./Home.jsx";
+import Search from "./Search.jsx";
+import Feed from "./Feed.jsx";
+import Storage from "./Storage.jsx";
 
 function App() {
 
@@ -20,13 +21,15 @@ function App() {
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
                 <Nav.Link as={Link} to="/feed">Feed</Nav.Link>
                 <Nav.Link as={Link} to="/search">Search</Nav.Link>
+                <Nav.Link as={Link} to="/Storage">Storage</Nav.Link>
               </Nav>
             </Container>
           </Navbar>
             <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/search" element={<Search />} />
                   <Route path="/feed" element={<Feed />} />
+                  <Route path="/search" element={<Search />} />
+                  <Route path="/storage" element={<Storage />} />
             </Routes>
         </Router>
   )
