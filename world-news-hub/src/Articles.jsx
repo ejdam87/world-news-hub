@@ -1,20 +1,21 @@
-import React, { useEffect } from "react"
+import React from "react"
+import { Carousel } from 'react-bootstrap';
 
-function Articles()
+import Article from "./Article.jsx";
+
+function Articles(props)
 {
-    const news_token = import.meta.env.VITE_NEWS_TOKEN;
-
-    const getData = async () => {
-        const res = await fetch("https://myproducts.com/");
-        const data = await res.json();
-        console.log(data);
-    }
-
-    useEffect(()=> {
-        getData();
-    }, []);
-
-    return <div>Articles</div>
+    return(
+        <Carousel interval={null}>
+            {
+                props.articles.map((article, index) => (
+                        <Carousel.Item key={index}>
+                            <Article headline={article["title"]} text={article["description"]} />
+                        </Carousel.Item>
+                ))
+            }
+        </Carousel>
+    )
 }
 
 export default Articles

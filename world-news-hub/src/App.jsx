@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-import './litera.bootstrap.min.css';
+import './darkly.bootstrap.min.css';
 
 import Home from "./Home.jsx";
 import Search from "./Search.jsx";

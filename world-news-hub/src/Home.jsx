@@ -31,7 +31,8 @@ function Home()
                         <Card.Text>
                             One option of using this app is to scroll the news from many well-known
                             sources similar to scrolling on different social media. We also provide
-                            a functionality to store the articles for later use.
+                            a functionality to store the articles for later use. For more specific
+                            searching, use the functionality provided by "Search" application.
                         </Card.Text>
                         <Card.Subtitle>Searching functionality</Card.Subtitle>
                         <Card.Text>
