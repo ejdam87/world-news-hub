@@ -20,25 +20,25 @@ function Home()
         <Row className="align-items-center">
             <Col sm={12} md={12} lg={12} className="text-center mt-4">
                 <Card>
-                    <h1>Welcome to the World news hub!</h1>
+                    <Card.Header as="h1">Welcome to the World news hub!</Card.Header>
                     <Card.Body>
-                        <Card.Title>About the application</Card.Title>
+                        <Card.Title as="h2">About the application</Card.Title>
                         <Card.Text>
                             The main idea of the application is to summarize news from across the world
                             and give user the ability to perform searching and storing articles.
                         </Card.Text>
-                        <Card.Subtitle>Scrolling the feed</Card.Subtitle>
+                        <Card.Subtitle as="h3">Scrolling the feed</Card.Subtitle>
                         <Card.Text>
                             One option of using this app is to scroll the news from many well-known
                             sources similar to scrolling on different social media. We also provide
                             a functionality to store the articles for later use. For more specific
                             searching, use the functionality provided by "Search" application.
                         </Card.Text>
-                        <Card.Subtitle>Searching functionality</Card.Subtitle>
+                        <Card.Subtitle as="h3">Searching functionality</Card.Subtitle>
                         <Card.Text>
                             TODO
                         </Card.Text>
-                        <Card.Subtitle>Looking into saved articles</Card.Subtitle>
+                        <Card.Subtitle as="h3">Looking into saved articles</Card.Subtitle>
                         <Card.Text>
                             TODO
                         </Card.Text>

@@ -6,7 +6,7 @@ import Article from "./Article.jsx";
 function Articles(props)
 {
     return(
-        <Carousel interval={null}>
+        <Carousel interval={null} variant="dark">
             {
                 props.articles.map((article, index) => (
                         <Carousel.Item key={index}>

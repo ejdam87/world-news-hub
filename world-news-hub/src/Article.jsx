@@ -1,28 +1,24 @@
 import React from "react"
-import { Card, Button, Container, Image } from 'react-bootstrap';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Card, Button, Row, Col } from 'react-bootstrap';
 
 function Article(props)
 {
-    return(<Container>
-                <Card className="text-center m-3" >
-                    <Card.Body>
-                        <Row>
-                            <Col md={5}>
-                                <Image src="https://placehold.co/500x100" />
-                            </Col>
-                            <Col md={7} className="d-flex flex-column">
-                                <Card.Header as="h5">{props.headline}</Card.Header>
-                                <Card.Text>{props.text}</Card.Text>
-                                <Card.Footer>
-                                    <Button variant="primary">Save the article</Button>
-                                </Card.Footer>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
-            </Container>
+    return( <Card className="text-center m-3">
+                <Card.Header as="h5">
+                    <Button variant="primary">Save the article</Button>
+                </Card.Header>
+                <Row>
+                    <Col md={5}>
+                        <Card.Img variant="bottom" src="https://placehold.co/100x80"/>
+                    </Col>
+                    <Col md={7}>
+                        <Card.Body>
+                            <Card.Title>{props.headline}</Card.Title>
+                            <Card.Text>{props.text}</Card.Text>
+                        </Card.Body>
+                    </Col>
+                </Row>
+            </Card>
             )
 }
 

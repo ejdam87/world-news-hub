@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-import './darkly.bootstrap.min.css';
+import './litera.bootstrap.min.css';
 
 import Home from "./Home.jsx";
 import Search from "./Search.jsx";
@@ -14,7 +14,7 @@ import Storage from "./Storage.jsx";
 function App() {
 
   return (<Router>
-          <Navbar bg="dark" data-bs-theme="dark">
+          <Navbar className="navbar navbar-expand-lg bg-body-tertiary">
             <Container>
               <Navbar.Brand as={Link} to="/">World news hub</Navbar.Brand>
               <Nav className="me-auto">
