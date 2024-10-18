@@ -18,23 +18,20 @@ function Home()
     return (<>
     <Container className="vh-100">
         <Row className="align-items-center">
-            <Col sm={12} md={12} lg={12} className="text-center">
-                <h1>Welcome to the World news hub!</h1>
-            </Col>
-        </Row>
-
-        <Row className="align-items-center">
-            <Col sm={12} md={12} lg={12} className="text-center">
+            <Col sm={12} md={12} lg={12} className="text-center mt-4">
                 <Card>
+                    <h1>Welcome to the World news hub!</h1>
                     <Card.Body>
                         <Card.Title>About the application</Card.Title>
                         <Card.Text>
-                            The main idea of the application is to summarize the news from across the world
+                            The main idea of the application is to summarize news from across the world
                             and give user the ability to perform searching and storing articles.
                         </Card.Text>
                         <Card.Subtitle>Scrolling the feed</Card.Subtitle>
                         <Card.Text>
-                            TODO
+                            One option of using this app is to scroll the news from many well-known
+                            sources similar to scrolling on different social media. We also provide
+                            a functionality to store the articles for later use.
                         </Card.Text>
                         <Card.Subtitle>Searching functionality</Card.Subtitle>
                         <Card.Text>
@@ -50,15 +47,15 @@ function Home()
                     </Card.Body>
                     <Card.Footer>
                         Where to contact me?
-                        <Row>
-                            <Col sm={12} md={4} lg={4}>
-                                <Image src={GithubIm} rounded className="image"/>
+                        <Row className="mt-2">
+                            <Col sm={12} md={4} lg={4} className="mt-2">
+                            <a href="https://github.com/ejdam87/" target="_blank"><Image src={GithubIm} rounded className="image"/></a>
                             </Col>
-                            <Col sm={12} md={4} lg={4}>
-                                <Image src={InstagramIm} rounded className="image"/>
+                            <Col sm={12} md={4} lg={4} className="mt-2">
+                                <a href="https://www.instagram.com/dzadam__/" target="_blank"><Image src={InstagramIm} rounded className="image"/></a>
                             </Col>
-                            <Col sm={12} md={4} lg={4}>
-                                <Image src={MailIm} rounded className="image"/>
+                            <Col sm={12} md={4} lg={4} className="mt-2">
+                            <a href="mailto:adam.dzadon@gmail.com" target="_blank"><Image src={MailIm} rounded className="image"/></a>
                             </Col>
                         </Row>
                     </Card.Footer>

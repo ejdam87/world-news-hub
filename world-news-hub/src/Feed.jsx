@@ -1,8 +1,9 @@
 import React from "react"
+import Articles from "./Articles.jsx"
 
 function Feed()
 {
-    return <div>Feed</div>
+    return <Articles />
 }
 
 export default Feed
