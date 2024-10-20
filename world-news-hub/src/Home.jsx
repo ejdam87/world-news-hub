@@ -18,32 +18,44 @@ function Home()
     return (<>
     <Container className="vh-100">
         <Row className="align-items-center">
-            <Col sm={12} md={12} lg={12} className="text-center mt-4">
+            <Col className="text-center mt-4">
                 <Card>
                     <Card.Header as="h1">Welcome to the World news hub!</Card.Header>
                     <Card.Body>
-                        <Card.Title as="h2">About the application</Card.Title>
-                        <Card.Text>
-                            The main idea of the application is to summarize news from across the world
-                            and give user the ability to perform searching and storing articles.
-                        </Card.Text>
-                        <Card.Subtitle as="h3">Scrolling the feed</Card.Subtitle>
-                        <Card.Text>
-                            One option of using this app is to scroll the news from many well-known
-                            sources similar to scrolling on different social media. We also provide
-                            a functionality to store the articles for later use. For more specific
-                            searching, use the functionality provided by "Search" application.
-                        </Card.Text>
-                        <Card.Subtitle as="h3">Searching functionality</Card.Subtitle>
-                        <Card.Text>
-                            TODO
-                        </Card.Text>
-                        <Card.Subtitle as="h3">Looking into saved articles</Card.Subtitle>
-                        <Card.Text>
-                            TODO
-                        </Card.Text>
+                        <Row className="mb-2">
+                            <Col>
+                                <Card.Title as="h2">About the application</Card.Title>
+                                <Card.Text>
+                                    The main idea of the application is to summarize news from across the world
+                                    and give user the ability to perform searching and storing articles.
+                                </Card.Text>
+                            </Col>
+                        </Row>
+                        <Row style={{ textAlign: 'justify' }} className="m-2">
+                            <Col sm={4} md={4} lg={{ span: 2, offset: 1 }}>
+                                <Card.Subtitle as="h3">Scrolling the feed</Card.Subtitle>
+                                <Card.Text>
+                                    One option of using this app is to scroll the news from many well-known
+                                    sources similar to scrolling on different social media. We also provide
+                                    a functionality to store the articles for later use. For more specific
+                                    searching, use the functionality provided by "Search" application.
+                                </Card.Text>
+                            </Col>
+                            <Col sm={4} md={4} lg={{ span: 2, offset: 2 }}>
+                                <Card.Subtitle as="h3">Searching functionality</Card.Subtitle>
+                                <Card.Text>
+                                    TODO
+                                </Card.Text>
+                            </Col>
+                            <Col sm={4} md={4} lg={{ span: 2, offset: 2 }}>
+                                <Card.Subtitle as="h3">Looking into saved articles</Card.Subtitle>
+                                <Card.Text>
+                                    TODO
+                                </Card.Text>
+                            </Col>
+                        </Row>
                         <Link to="/feed">
-                            <Button variant="primary" size="lg">Enter the app!</Button>
+                            <Button variant="outline-dark" size="lg">Enter the app!</Button>
                         </Link>
                     </Card.Body>
                     <Card.Footer>
