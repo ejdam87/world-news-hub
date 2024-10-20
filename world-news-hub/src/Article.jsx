@@ -1,23 +1,37 @@
 import React from "react"
-import { Card, Button, Row, Col } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
+
+import 'toastr/build/toastr.min.css';
+import toastr from 'toastr';
+
+import NewsIm from "./images/news.webp";
+import "./Article.css";
 
 function Article(props)
 {
+    const capitalize = (s) => {
+        const string = s[0]; // props.attr is a list
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    const handleSave = () => {
+        // do whatever is necessary to save the article
+        toastr.success("Article successfully saved!");
+    }
+
     return( <Card className="text-center m-3">
                 <Card.Header as="h5">
-                    <Button variant="primary">Save the article</Button>
+                    <Button variant="outline-dark" onClick={handleSave}>Save the article</Button>
                 </Card.Header>
-                <Row>
-                    <Col md={5}>
-                        <Card.Img variant="bottom" src="https://placehold.co/100x80"/>
-                    </Col>
-                    <Col md={7}>
-                        <Card.Body>
-                            <Card.Title>{props.headline}</Card.Title>
-                            <Card.Text>{props.text}</Card.Text>
-                        </Card.Body>
-                    </Col>
-                </Row>
+                <Card.Img
+                    className="article-image"
+                    variant="top"
+                    src={props.image_url == null ? NewsIm : props.image_url}/>
+                <Card.Body>
+                    <Card.Title>{props.title}</Card.Title>
+                    <Card.Text>{props.desc}</Card.Text>
+                    <Card.Text> {capitalize(props.country)} | {props.source_name} | <Card.Link target="_blank" href={props.link}>Full article here</Card.Link> </Card.Text>
+                </Card.Body>
             </Card>
             )
 }

@@ -10,7 +10,14 @@ function Articles(props)
             {
                 props.articles.map((article, index) => (
                         <Carousel.Item key={index}>
-                            <Article headline={article["title"]} text={article["description"]} />
+                            <Article
+                                title={article["title"]}
+                                desc={article["description"]}
+                                image_url={article["image_url"]}
+                                country={article["country"]}
+                                source_name={article["source_name"]}
+                                link={article["link"]}
+                                />
                         </Carousel.Item>
                 ))
             }
