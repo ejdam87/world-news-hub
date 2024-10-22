@@ -15,7 +15,7 @@ function Article(props)
     }
 
     const handleSave = () => {
-        // do whatever is necessary to save the article
+        props.saveArticle( props.article );
         toastr.success("Article successfully saved!");
     }
 
@@ -26,11 +26,11 @@ function Article(props)
                 <Card.Img
                     className="article-image"
                     variant="top"
-                    src={props.image_url == null ? NewsIm : props.image_url}/>
+                    src={props.article["image_url"] == null ? NewsIm : props.article["image_url"]}/>
                 <Card.Body>
-                    <Card.Title>{props.title}</Card.Title>
-                    <Card.Text>{props.desc}</Card.Text>
-                    <Card.Text> {capitalize(props.country)} | {props.source_name} | <Card.Link target="_blank" href={props.link}>Full article here</Card.Link> </Card.Text>
+                    <Card.Title>{props.article["title"]}</Card.Title>
+                    <Card.Text>{props.article["description"]}</Card.Text>
+                    <Card.Text> {capitalize(props.article["country"])} | {props.article["source_name"]} | <Card.Link target="_blank" href={props.article["link"]}>Full article here</Card.Link> </Card.Text>
                 </Card.Body>
             </Card>
             )

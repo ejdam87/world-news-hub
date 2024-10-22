@@ -1,8 +1,12 @@
 import React from "react"
 
-function Storage()
+function Storage(props)
 {
-    return <div>Storage</div>
+    return (
+        <>
+            { props.savedArticles.map( (article) => <p>{article.title}</p> ) }
+        </>
+    )
 }
 
 export default Storage

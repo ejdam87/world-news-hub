@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -12,6 +12,65 @@ import Feed from "./Feed.jsx";
 import Storage from "./Storage.jsx";
 
 function App() {
+
+    const [savedArticles, setSavedArticles] = useState( [] );
+
+    const jsonbin_token = import.meta.env.VITE_JSONBIN_TOKEN;
+    const BIN_ID = "6717ae94e41b4d34e446f913";
+
+    const getSavedArticles = async () => {
+        try
+        {
+            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                method: 'GET',
+                headers: {
+                    'X-Access-Key': jsonbin_token
+                }
+            });
+
+            const json = await res.json();
+            setSavedArticles(json.record.saved_articles);
+            return true;
+        }
+        catch (e)
+        {
+            setSavedArticles([]);
+            return false;
+        }
+    }
+
+    useEffect(()=> {
+        getSavedArticles();
+    }, []);
+
+    const saveArticles = async (articles) => {
+        try {
+            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json',
+                'X-Access-Key': jsonbin_token
+                },
+                body: JSON.stringify({ saved_articles: articles })
+            });
+            if (res.ok)
+            {
+                setSavedArticles(articles);
+            }
+        }
+        catch(e)
+        {
+            console.error(e);
+        }
+      }
+
+    const saveArticle = (article) => {
+        saveArticles( [article, ...savedArticles] );
+    }
+
+    const deleteArticle = () => {
+
+    }
 
   return (<Router>
           <Navbar className="navbar navbar-expand-lg bg-body-tertiary">
@@ -27,9 +86,9 @@ function App() {
           </Navbar>
             <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/feed" element={<Feed />} />
+                  <Route path="/feed" element={<Feed saveArticle={saveArticle} />} />
                   <Route path="/search" element={<Search />} />
-                  <Route path="/storage" element={<Storage />} />
+                  <Route path="/storage" element={<Storage savedArticles={savedArticles} />} />
             </Routes>
         </Router>
   )
