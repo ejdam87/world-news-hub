@@ -3,7 +3,6 @@ import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
 import './litera.bootstrap.min.css';
 
 import Home from "./Home.jsx";
@@ -64,12 +63,13 @@ function App() {
         }
       }
 
-    const saveArticle = (article) => {
-        saveArticles( [article, ...savedArticles] );
+    const saveArticle = (article_w_metadata) => {
+        saveArticles( [article_w_metadata, ...savedArticles] );
     }
 
-    const deleteArticle = () => {
-
+    const deleteArticle = (i_to_remove) => {
+        const newArticles = savedArticles.filter( (_, i) => i != i_to_remove );
+        saveArticles(newArticles);
     }
 
   return (<Router>
@@ -88,7 +88,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/feed" element={<Feed saveArticle={saveArticle} />} />
                   <Route path="/search" element={<Search />} />
-                  <Route path="/storage" element={<Storage savedArticles={savedArticles} />} />
+                  <Route path="/storage" element={<Storage deleteArticle={deleteArticle} savedArticles={savedArticles} />} />
             </Routes>
         </Router>
   )

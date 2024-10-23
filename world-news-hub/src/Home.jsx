@@ -50,7 +50,10 @@ function Home()
                             <Col sm={4} md={4} lg={{ span: 2, offset: 2 }}>
                                 <Card.Subtitle as="h3">Looking into saved articles</Card.Subtitle>
                                 <Card.Text>
-                                    TODO
+                                    When you previously saved the articles from feed that interested you,
+                                    they will be shown in the "Storage" section. In case you are not interested
+                                    in them anymore, you can simply delete it. Together with the article itself,
+                                    we also track certain metadata such as date of saving and so on.
                                 </Card.Text>
                             </Col>
                         </Row>

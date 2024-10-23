@@ -10,7 +10,7 @@ function FeedArticles(props)
             {
                 props.feedArticles.map((article, index) => (
                         <Carousel.Item key={index}>
-                            <Article saveArticle={props.saveArticle} article={article} />
+                            <Article inFeed={true} saveArticle={props.saveArticle} article={article} />
                         </Carousel.Item>
                 ))
             }
