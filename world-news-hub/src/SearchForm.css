@@ -1,0 +1,14 @@
+.chip
+{
+    background-color: grey !important;
+}
+
+.highlightOption
+{
+    background: grey !important;
+}
+
+.multiSelectContainer li:hover
+{
+    background-color: grey !important;
+}
