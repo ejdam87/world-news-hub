@@ -35,7 +35,7 @@ function Feed(props)
         }
         catch (e)
         {
-            toastr.error("Failed to fetch the articles!")
+            toastr.error("Failed to fetch the articles!");
             setFeedArticles([]);
             setLoading(false);
             return false;
@@ -58,13 +58,19 @@ function Feed(props)
 
     return (
         <Container className="text-center">
-            {loading ? <Spinner animation="grow" size="xl" /> :
+            <Row>
+                <Col>
+                    <h1 className="m-2">Article feed</h1>
+                </Col>
+            </Row>
+            {loading ?
+            <Row className="align-items-center">
+                <Col className="text-center">
+                    <Spinner className="mt-3" animation="grow" size="xl" />
+                </Col>
+            </Row>
+            :
             <>
-                <Row>
-                    <Col>
-                        <h1 className="m-2">Article feed</h1>
-                    </Col>
-                </Row>
                 <Row className="mb-4">
                     <Col sm={12} md={{ span: 8, offset: 2 }} lg={{ span: 8, offset: 2 }}>
                         <FeedArticles saveArticle={props.saveArticle} feedArticles={feedArticles}/>

@@ -14,7 +14,7 @@ function Article(props)
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
 
         const timeOfSaving = new Date().toLocaleString('en-GB', {
             year: 'numeric',
@@ -27,13 +27,27 @@ function Article(props)
           });
 
         const cargo = { "content" : props.article, "metadata": {"time" : timeOfSaving} };
-        props.saveArticle( cargo );
-        toastr.success("Article successfully saved!");
+        const res = await props.saveArticle( cargo );
+        if (res == true)
+        {
+            toastr.success("Article successfully saved!");
+        }
+        else
+        {
+            toastr.error("Article saving failed!");
+        }
     }
 
-    const handleDelete = () => {
-        props.deleteArticle( props.index );
-        toastr.success("Article successfully deleted!");
+    const handleDelete = async () => {
+        const res = await props.deleteArticle( props.index );
+        if (res == true)
+        {
+            toastr.success("Article successfully deleted!");
+        }
+        else
+        {
+            toastr.error("Article deletion failed!");
+        }
     }
 
     return( <Card className="text-center m-3">

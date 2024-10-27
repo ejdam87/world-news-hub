@@ -12,14 +12,15 @@ function Storage(props)
                 </Card.Header>
                 <Card.Body>
                     <Row>
-                        {props.savedArticles.map( (article_w_metadata, i) => <Col sm={12} md={6} lg={6} >
-                                                                                <Article
-                                                                                    inFeed={false}
-                                                                                    article={article_w_metadata["content"]}
-                                                                                    metadata={article_w_metadata["metadata"]}
-                                                                                    index={i}
-                                                                                    deleteArticle={props.deleteArticle} />
-                                                                            </Col> ) }
+                        {props.savedArticles.map( (article_w_metadata, i) =>
+                            <Col sm={12} md={6} lg={6} >
+                                <Article
+                                    inFeed={false}
+                                    article={article_w_metadata["content"]}
+                                    metadata={article_w_metadata["metadata"]}
+                                    index={i}
+                                    deleteArticle={props.deleteArticle} />
+                            </Col> ) }
                     </Row>
                 </Card.Body>
             </Card>

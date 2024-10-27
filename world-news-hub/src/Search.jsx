@@ -23,18 +23,24 @@ function Search(props)
                 </Card.Body>
             </Card>
             {loading ?
-                <Spinner animation="grow" size="xl" />
+                <Row className="align-items-center">
+                    <Col className="text-center">
+                        <Spinner className="mt-3" animation="grow" size="xl" />
+                    </Col>
+                </Row>
                 :
                 <>
                     <Card className="m-3">
                         <Card.Body>
                             <Row>
-                                {searchArticles.map( (article) => <Col sm={12} md={6} lg={6} >
-                                                                                        <Article
-                                                                                            inFeed={true}
-                                                                                            article={article}
-                                                                                            saveArticle={props.saveArticle} />
-                                                                                    </Col> ) }
+                                {searchArticles.map( (article) =>
+                                    <Col sm={12} md={6} lg={6} >
+                                        <Article
+                                            inFeed={true}
+                                            article={article}
+                                            saveArticle={props.saveArticle} />
+                                    </Col>
+                                ) }
                             </Row>
                         </Card.Body>
                     </Card>

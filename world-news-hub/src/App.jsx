@@ -55,21 +55,28 @@ function App() {
             if (res.ok)
             {
                 setSavedArticles(articles);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         catch(e)
         {
-            console.error(e);
+            return false;
         }
       }
 
-    const saveArticle = (article_w_metadata) => {
-        saveArticles( [article_w_metadata, ...savedArticles] );
+    const saveArticle = async (article_w_metadata) => {
+        const res = await saveArticles( [article_w_metadata, ...savedArticles] );
+        return res;
     }
 
-    const deleteArticle = (i_to_remove) => {
+    const deleteArticle = async (i_to_remove) => {
         const newArticles = savedArticles.filter( (_, i) => i != i_to_remove );
-        saveArticles(newArticles);
+        const res = await saveArticles(newArticles);
+        return res;
     }
 
   return (<Router>

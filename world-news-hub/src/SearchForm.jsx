@@ -1,6 +1,8 @@
 import React, {useState} from "react"
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import Multiselect from 'multiselect-react-dropdown';
+import 'toastr/build/toastr.min.css';
+import toastr from 'toastr';
 
 import "./SearchForm.css";
 
@@ -46,7 +48,6 @@ function SearchForm(props)
 
         try
         {
-            props.setLoading(true);
             const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&${query}`);
             const data = await res.json();
 
@@ -61,16 +62,27 @@ function SearchForm(props)
 
             props.setSearchArticles(newArticles);
             props.setLoading(false);
+            return true;
         }
         catch (e)
         {
+            toastr.error("Failed to fetch the articles!");
             props.setLoading(false);
-            console.error(e);
+            return false;
+        }
+    }
+
+    const handleSubmitClick = async (e) => {
+        props.setLoading(true);
+        const status = await handleSubmit(e);
+        if (status == true)
+        {
+            toastr.success("Found articles!");
         }
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmitClick}>
             <Row>
                 <Col>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
