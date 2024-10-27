@@ -4,32 +4,69 @@ import Multiselect from 'multiselect-react-dropdown';
 
 import "./SearchForm.css";
 
-function SearchForm()
+function SearchForm(props)
 {
+    const LANG_MAP = {"English" : "en", "Dutch" : "nl", "Chinese" : "zl", "French" : "fr",
+                      "Finnish": "fi", "German": "de", "Japanese": "jp", "Spanish" : "es"};
+    
+    const COUNTRY_MAP = {"Australia" : "au", "Brazil" : "br", "Canada" : "ca",
+                         "China" : "cn", "Finland" : "fi", "France" : "fr", "Germany" : "de",
+                         "Japan" : "jp", "Netherlands" : "nl", "Spain" : "es",
+                         "United States of America" : "us", "United Kingdom" : "uk", "World" : "wo"};
 
-    const languages = ['english', 'french'];
-    const countries = ['brazil', 'spain'];
-    const categories = ['top', 'sport'];
+    const LANGS = Object.keys(LANG_MAP);
+    const COUNTRIES = Object.keys(COUNTRY_MAP);
+
+    const CATEGORIES = ["Business", "Crime", "Education", "Food", "Health",
+                        "Politics", "Sports", "Science", "Technology", "Top", "Tourism"];
 
     const [queryString, setQueryString] = useState("");
     const [selectedLangs, setSelectedLangs] = useState([]);
     const [selectedCountries, setSelectedCountries] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
-    const handleSubmit = (e) => {
+    const NEWS_TOKEN = import.meta.env.VITE_NEWS_TOKEN;
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log( "Key words:" );
-        console.log( queryString );
 
-        console.log( "selected langs:" );
-        console.log( selectedLangs );
+        const qWords = queryString.split(" ").filter( (w) => w != "" );
+        const qWordQuery = qWords.length == 0 ? "": "q=" + qWords.join("%20");
 
-        console.log( "selected countries:" );
-        console.log( selectedCountries );
+        const slangs = selectedLangs.map( (l) => LANG_MAP[l] );
+        const languageQuery = slangs.length == 0 ? "" : "language=" + slangs.join(",");
 
-        console.log( "selected categories:" );
-        console.log( selectedCategories);
+        const scountries = selectedCountries.map( (c) => COUNTRY_MAP[c] )
+        const countryQuery = scountries.length == 0 ? "" : "country=" + scountries.join(",");
 
+        const scategories = selectedCategories.map( (c) => c.charAt(0).toLowerCase() + c.slice(1) )
+        const categoryQuery = scategories.length == 0 ? "" : "category=" + scategories.join(",");
+
+        const query = [ qWordQuery, languageQuery, countryQuery, categoryQuery ].filter( (q) => q != "" ).join("&");
+
+        try
+        {
+            props.setLoading(true);
+            const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&${query}`);
+            const data = await res.json();
+
+            const newArticles = data["results"].map( (item) => ({
+                "title" : item["title"],
+                "description" : item["description"],
+                "image_url" : item["image_url"],
+                "country" : item["country"],
+                "source_name" : item["source_name"],
+                "link" : item["link"]
+            }));
+
+            props.setSearchArticles(newArticles);
+            props.setLoading(false);
+        }
+        catch (e)
+        {
+            props.setLoading(false);
+            console.error(e);
+        }
     }
 
     return (
@@ -51,7 +88,7 @@ function SearchForm()
                         <Form.Label>Country</Form.Label>
                         <Multiselect
                             isObject={false}
-                            options={countries}
+                            options={COUNTRIES}
                             placeholder="Select countries"
                             showArrow={true}
                             onSelect={ (sl, _) => { setSelectedCountries( sl ) } }
@@ -65,7 +102,7 @@ function SearchForm()
                         <Form.Label>Category</Form.Label>
                         <Multiselect
                             isObject={false}
-                            options={categories}
+                            options={CATEGORIES}
                             placeholder="Select categories"
                             showArrow={true}
                             onSelect={ (sl, _) => { setSelectedCategories( sl ) } }
@@ -79,7 +116,7 @@ function SearchForm()
                     <Form.Label>Language</Form.Label>
                     <Multiselect
                         isObject={false}
-                        options={languages}
+                        options={LANGS}
                         placeholder="Select languages"
                         showArrow={true}
                         onSelect={ (sl, _) => { setSelectedLangs( sl ) } }

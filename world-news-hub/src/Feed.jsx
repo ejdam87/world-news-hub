@@ -7,17 +7,16 @@ import toastr from 'toastr';
 function Feed(props)
 {
 
-    // Initialize for debugging purposes (not to fetch all the time from the API)
     const [feedArticles, setFeedArticles] = useState( [] );
     const [loading, setLoading] = useState(true);
 
     // --- API calls functionality
-    const news_token = import.meta.env.VITE_NEWS_TOKEN;
+    const NEWS_TOKEN = import.meta.env.VITE_NEWS_TOKEN;
 
     const getData = async () => {
         try
         {
-            const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${news_token}&language=en`);
+            const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&language=en`);
             const data = await res.json();
 
             // taking only necessary attributes from each entry

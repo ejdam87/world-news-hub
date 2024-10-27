@@ -1,10 +1,15 @@
-import React from "react"
-import { Container, Card } from 'react-bootstrap';
+import React, {useState} from "react"
+import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
 
 import SearchForm from "./SearchForm";
+import Article from "./Article";
 
-function Search()
+function Search(props)
 {
+
+    const [searchArticles, setSearchArticles] = useState( [] );
+    const [loading, setLoading] = useState(false);
+
     return (
         <Container>
             <Card className="mt-3">
@@ -14,9 +19,27 @@ function Search()
                     </Card.Title>
                 </Card.Header>
                 <Card.Body>
-                    <SearchForm />
+                    <SearchForm setLoading={setLoading} setSearchArticles={setSearchArticles} />
                 </Card.Body>
             </Card>
+            {loading ?
+                <Spinner animation="grow" size="xl" />
+                :
+                <>
+                    <Card className="m-3">
+                        <Card.Body>
+                            <Row>
+                                {searchArticles.map( (article) => <Col sm={12} md={6} lg={6} >
+                                                                                        <Article
+                                                                                            inFeed={true}
+                                                                                            article={article}
+                                                                                            saveArticle={props.saveArticle} />
+                                                                                    </Col> ) }
+                            </Row>
+                        </Card.Body>
+                    </Card>
+                </>
+            }
         </Container>
       );
 }

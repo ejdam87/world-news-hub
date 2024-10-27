@@ -87,7 +87,7 @@ function App() {
             <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/feed" element={<Feed saveArticle={saveArticle} />} />
-                  <Route path="/search" element={<Search />} />
+                  <Route path="/search" element={<Search saveArticle={saveArticle} />} />
                   <Route path="/storage" element={<Storage deleteArticle={deleteArticle} savedArticles={savedArticles} />} />
             </Routes>
         </Router>
