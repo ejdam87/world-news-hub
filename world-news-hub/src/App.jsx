@@ -41,21 +41,21 @@ function App() {
                 return "Unavailable";
             }
 
-            const result = await response.json();
-            const scores = result[0].map( (item) => item["score"] );
+            let result = await response.json();
+            result = result[0];
 
-            let maxIndex = 0;
-            for (let i = 1; i < scores.length; i++) {
-                if (scores[i] > scores[maxIndex]) {
-                    maxIndex = i;
+            let mx = result[0];
+            for (let i = 1; i < result.length; i++) {
+                if (result[i]["score"] > mx["score"]) {
+                    mx = result[i];
                 }
             }
 
-            if (0 == maxIndex)
+            if (mx["label"] == "LABEL_0")
             {
                 return "Mostly negative";
             }
-            else if (1 == maxIndex)
+            else if (mx["label"] == "LABEL_1")
             {
                 return "Mostly neutral";
             }
