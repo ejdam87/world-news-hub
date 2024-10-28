@@ -87,6 +87,8 @@ function App() {
             "description" : item["description"],
             "image_url" : item["image_url"],
             "country" : item["country"],
+            "category": item["category"],
+            "language": item["language"],
             "source_name" : item["source_name"],
             "link" : item["link"],
             "sentiment" : sentiments[i]

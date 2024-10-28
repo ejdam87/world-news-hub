@@ -39,7 +39,7 @@ function Article(props)
     }
 
     const handleDelete = async () => {
-        const res = await props.deleteArticle( props.index );
+        const res = await props.deleteArticleStorage( props.index );
         if (res == true)
         {
             toastr.success("Article successfully deleted!");
