@@ -60,6 +60,7 @@ function Article(props)
                     }
                 </Card.Header>
                 {props.inFeed ? <></> : <Card.Text className="mt-1"> Saved at: {props.metadata["time"]} </Card.Text>}
+                <Card.Text className="mt-2"> Sentiment : {props.article["sentiment"]} </Card.Text>
                 <Card.Img
                     className="article-image"
                     variant="top"

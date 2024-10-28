@@ -27,8 +27,6 @@ function SearchForm(props)
     const [selectedCountries, setSelectedCountries] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
-    const NEWS_TOKEN = import.meta.env.VITE_NEWS_TOKEN;
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -48,25 +46,14 @@ function SearchForm(props)
 
         try
         {
-            const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&${query}`);
-            const data = await res.json();
-
-            const newArticles = data["results"].map( (item) => ({
-                "title" : item["title"],
-                "description" : item["description"],
-                "image_url" : item["image_url"],
-                "country" : item["country"],
-                "source_name" : item["source_name"],
-                "link" : item["link"]
-            }));
-
+            const newArticles = await props.fetchArticles(query);
             props.setSearchArticles(newArticles);
             props.setLoading(false);
             return true;
         }
         catch (e)
         {
-            toastr.error("Failed to fetch the articles!");
+            console.log(e);
             props.setLoading(false);
             return false;
         }
@@ -78,6 +65,10 @@ function SearchForm(props)
         if (status == true)
         {
             toastr.success("Found articles!");
+        }
+        else
+        {
+            toastr.error("Failed to fetch the articles!");
         }
     }
 

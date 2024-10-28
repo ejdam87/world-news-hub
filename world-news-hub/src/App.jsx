@@ -14,8 +14,86 @@ function App() {
 
     const [savedArticles, setSavedArticles] = useState( [] );
 
-    const jsonbin_token = import.meta.env.VITE_JSONBIN_TOKEN;
+    const JSONBIN_TOKEN = import.meta.env.VITE_JSONBIN_TOKEN;
+    const HUGGINGFACE_TOKEN = import.meta.env.VITE_HUGGINGFACE_TOKEN;
+    const NEWS_TOKEN = import.meta.env.VITE_NEWS_TOKEN;
     const BIN_ID = "6717ae94e41b4d34e446f913";
+
+    const fetchSentiment = async (text) => {
+
+        try
+        {
+            const data = {"inputs": text};
+            const response = await fetch(
+                "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment",
+                {
+                    headers: {
+                        "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
+                        "Content-Type" : "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(data),
+                }
+            );
+            
+            if (!response.ok)
+            {
+                return "Unavailable";
+            }
+
+            const result = await response.json();
+            const scores = result[0].map( (item) => item["score"] );
+
+            let maxIndex = 0;
+            for (let i = 1; i < scores.length; i++) {
+                if (scores[i] > scores[maxIndex]) {
+                    maxIndex = i;
+                }
+            }
+
+            if (0 == maxIndex)
+            {
+                return "Mostly negative";
+            }
+            else if (1 == maxIndex)
+            {
+                return "Mostly neutral";
+            }
+            else
+            {
+                return "Mostly positive";
+            }
+        }
+        catch (e)
+        {
+            console.log(e);
+            return "Unavailable";
+        }
+    }
+
+    const fetchArticles = async (q) => {
+        const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&${q}`);
+        const data = await res.json();
+
+        const sentiments = [];
+        for (let i = 0; i < data["results"].length; i++)
+        {
+            const sent = await fetchSentiment( data["results"][i]["title"] );
+            sentiments.push( sent );
+        }
+
+        const newArticles = data["results"].map( (item, i) => ({
+            "title" : item["title"],
+            "description" : item["description"],
+            "image_url" : item["image_url"],
+            "country" : item["country"],
+            "source_name" : item["source_name"],
+            "link" : item["link"],
+            "sentiment" : sentiments[i]
+        }));
+
+        return newArticles;
+    }
 
     const getSavedArticles = async () => {
         try
@@ -23,7 +101,7 @@ function App() {
             const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
                 method: 'GET',
                 headers: {
-                    'X-Access-Key': jsonbin_token
+                    'X-Access-Key': JSONBIN_TOKEN
                 }
             });
 
@@ -48,7 +126,7 @@ function App() {
                 method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json',
-                'X-Access-Key': jsonbin_token
+                'X-Access-Key': JSONBIN_TOKEN
                 },
                 body: JSON.stringify({ saved_articles: articles })
             });
@@ -93,8 +171,8 @@ function App() {
           </Navbar>
             <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/feed" element={<Feed saveArticle={saveArticle} />} />
-                  <Route path="/search" element={<Search saveArticle={saveArticle} />} />
+                  <Route path="/feed" element={<Feed fetchArticles={fetchArticles} saveArticle={saveArticle} />} />
+                  <Route path="/search" element={<Search fetchArticles={fetchArticles} saveArticle={saveArticle} />} />
                   <Route path="/storage" element={<Storage deleteArticle={deleteArticle} savedArticles={savedArticles} />} />
             </Routes>
         </Router>

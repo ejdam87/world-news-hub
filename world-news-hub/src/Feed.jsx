@@ -10,32 +10,16 @@ function Feed(props)
     const [feedArticles, setFeedArticles] = useState( [] );
     const [loading, setLoading] = useState(true);
 
-    // --- API calls functionality
-    const NEWS_TOKEN = import.meta.env.VITE_NEWS_TOKEN;
-
     const getData = async () => {
         try
         {
-            const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&language=en`);
-            const data = await res.json();
-
-            // taking only necessary attributes from each entry
-            const newArticles = data["results"].map( (item) => ({
-                "title" : item["title"],
-                "description" : item["description"],
-                "image_url" : item["image_url"],
-                "country" : item["country"],
-                "source_name" : item["source_name"],
-                "link" : item["link"]
-            }));
-
+            const newArticles = await props.fetchArticles("language=en");
             setFeedArticles(newArticles);
             setLoading(false);
             return true;
         }
         catch (e)
         {
-            toastr.error("Failed to fetch the articles!");
             setFeedArticles([]);
             setLoading(false);
             return false;
@@ -45,7 +29,6 @@ function Feed(props)
     useEffect(()=> {
         getData();
     }, []);
-    // ---
 
     const handleRefresh = async () => {
         setLoading(true);
@@ -53,6 +36,10 @@ function Feed(props)
         if (status == true)
         {
             toastr.success("Successfully refreshed!");
+        }
+        else
+        {
+            toastr.error("Failed to fetch the articles!");
         }
     }
 

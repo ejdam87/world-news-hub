@@ -19,7 +19,7 @@ function Search(props)
                     </Card.Title>
                 </Card.Header>
                 <Card.Body>
-                    <SearchForm setLoading={setLoading} setSearchArticles={setSearchArticles} />
+                    <SearchForm fetchArticles={props.fetchArticles} setLoading={setLoading} setSearchArticles={setSearchArticles} />
                 </Card.Body>
             </Card>
             {loading ?
