@@ -66,7 +66,6 @@ function App() {
         }
         catch (e)
         {
-            console.log(e);
             return "Unavailable";
         }
     }

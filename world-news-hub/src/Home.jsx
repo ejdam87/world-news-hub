@@ -31,16 +31,18 @@ function Home()
                         <Row style={{ textAlign: 'justify' }} className="m-2">
                             <Accordion>
                                 <Accordion.Item eventKey="0">
-                                    <Accordion.Header>Scrolling the feed</Accordion.Header>
+                                    <Accordion.Header>Swiping the feed</Accordion.Header>
                                     <Accordion.Body>
-                                            One option of using this app is to scroll the news from many well-known
-                                            sources similar to scrolling on different social media. We also provide
-                                            a functionality to store the articles for later use. For more specific
-                                            searching, use the functionality provided by "Search" application.
+                                            One option of using this app is to swipe the news from many well-known
+                                            sources similar to scrolling on various social media. Also, we perform
+                                            the sentiment analysis of each article headline for better categorization.
+                                            Next, we provide a functionality to store the articles for later use.
+                                            For more specific searching, use the functionality provided by "Search" application.
+                                            Finally, to observe saved articles, use "Storage" application.
                                     </Accordion.Body>
                                 </Accordion.Item>
                                 <Accordion.Item eventKey="1">
-                                    <Accordion.Header>Searching functionality</Accordion.Header>
+                                    <Accordion.Header>Advanced searching</Accordion.Header>
                                     <Accordion.Body>
                                         In case the basic feed articles are not enough, the application
                                         provides a functionality for more advanced searching based on keywords,
@@ -51,10 +53,12 @@ function Home()
                                 <Accordion.Item eventKey="2">
                                     <Accordion.Header>Looking into saved articles</Accordion.Header>
                                     <Accordion.Body>
-                                        When you previously saved the articles from feed that interested you,
+                                        When you previously saved the articles from feed or search that interested you,
                                         they will be shown in the "Storage" section. In case you are not interested
-                                        in them anymore, you can simply delete it. Together with the article itself,
-                                        we also track certain metadata such as date of saving and so on.
+                                        in some of them anymore, you can simply delete them. Together with the article itself,
+                                        we also track certain metadata such as date of saving and so on. Finally, we provide
+                                        a functionality to group articles based on various attributes, namely, category, country, 
+                                        language, and sentiment for better organization.
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
@@ -68,13 +72,40 @@ function Home()
                         Where to contact me?
                         <Row className="mt-2">
                             <Col sm={12} md={4} lg={4} className="mt-2">
-                            <a href="https://github.com/ejdam87/" target="_blank"><Image src={GithubIm} rounded className="image"/></a>
+                                <Row>
+                                    <Col>
+                                        <a href="https://github.com/ejdam87/" target="_blank"><Image src={GithubIm} rounded className="image"/></a>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        ejdam87
+                                    </Col>
+                                </Row>
                             </Col>
                             <Col sm={12} md={4} lg={4} className="mt-2">
-                                <a href="https://www.instagram.com/dzadam__/" target="_blank"><Image src={InstagramIm} rounded className="image"/></a>
+                                <Row>
+                                    <Col>
+                                        <a href="https://www.instagram.com/dzadam__/" target="_blank"><Image src={InstagramIm} rounded className="image"/></a>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        dzadam__
+                                    </Col>
+                                </Row>
                             </Col>
                             <Col sm={12} md={4} lg={4} className="mt-2">
-                            <a href="mailto:adam.dzadon@gmail.com" target="_blank"><Image src={MailIm} rounded className="image"/></a>
+                                <Row>
+                                    <Col>
+                                        <a href="mailto:adam.dzadon@gmail.com" target="_blank"><Image src={MailIm} rounded className="image"/></a>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        adam.dzadon@gmail.com
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                     </Card.Footer>

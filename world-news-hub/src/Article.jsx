@@ -9,8 +9,7 @@ import "./Article.css";
 
 function Article(props)
 {
-    const capitalize = (s) => {
-        const string = s[0]; // props.attr is a list
+    const capitalize = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
@@ -68,7 +67,7 @@ function Article(props)
                 <Card.Body>
                     <Card.Title>{props.article["title"]}</Card.Title>
                     <Card.Text>{props.article["description"]}</Card.Text>
-                    <Card.Text> {capitalize(props.article["country"])} | {props.article["source_name"]} | <Card.Link target="_blank" href={props.article["link"]}>Full article here</Card.Link> </Card.Text>
+                    <Card.Text> {props.article["country"].map( (c) => capitalize(c) ).join(",")} | {props.article["source_name"]} | <Card.Link target="_blank" href={props.article["link"]}>Full article here</Card.Link> </Card.Text>
                 </Card.Body>
             </Card>
             )

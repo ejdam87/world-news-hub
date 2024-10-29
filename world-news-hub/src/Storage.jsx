@@ -7,6 +7,10 @@ import "./AccordionColors.css";
 function Storage(props)
 {
 
+    const capitalize = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     const [groupAttribute, setGroupAttribute] = useState( "noGroup" );
     const [loading, setLoading] = useState(false);
 
@@ -71,6 +75,7 @@ function Storage(props)
                                         <Dropdown.Item eventKey="country">Country</Dropdown.Item>
                                         <Dropdown.Item eventKey="category">Category</Dropdown.Item>
                                         <Dropdown.Item eventKey="language">Language</Dropdown.Item>
+                                        <Dropdown.Item eventKey="sentiment">Sentiment</Dropdown.Item>
                                     </>
                                 }
                             </DropdownButton>
@@ -86,7 +91,7 @@ function Storage(props)
                         <Accordion>
                             {Object.keys(articleGroups).map( (group, i) =>
                                 <Accordion.Item eventKey={i}>
-                                    <Accordion.Header>{group}</Accordion.Header>
+                                    <Accordion.Header>{capitalize(group)}</Accordion.Header>
                                     <Accordion.Body>
                                         <Row>
                                             {articleGroups[group].map( (j, k) =>
