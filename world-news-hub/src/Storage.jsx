@@ -90,12 +90,12 @@ function Storage(props)
                         :
                         <Accordion>
                             {Object.keys(articleGroups).map( (group, i) =>
-                                <Accordion.Item eventKey={i}>
+                                <Accordion.Item eventKey={i} key={i}>
                                     <Accordion.Header>{capitalize(group)}</Accordion.Header>
                                     <Accordion.Body>
-                                        <Row>
+                                        <Row key={i}>
                                             {articleGroups[group].map( (j, k) =>
-                                                <Col sm={12} md={6} lg={6} >
+                                                <Col sm={12} md={6} lg={6} key={Object.keys(articleGroups).length + k}>
                                                     <Article
                                                         inFeed={false}
                                                         article={props.savedArticles[j]["content"]}

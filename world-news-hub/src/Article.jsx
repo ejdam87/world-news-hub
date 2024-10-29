@@ -63,7 +63,8 @@ function Article(props)
                 <Card.Img
                     className="article-image"
                     variant="top"
-                    src={props.article["image_url"] == null ? NewsIm : props.article["image_url"]}/>
+                    src={props.article["image_url"] == null ? NewsIm : props.article["image_url"]}
+                    onError={(e) => e.target.src = NewsIm}/>
                 <Card.Body>
                     <Card.Title>{props.article["title"]}</Card.Title>
                     <Card.Text>{props.article["description"]}</Card.Text>

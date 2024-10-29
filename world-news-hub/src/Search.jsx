@@ -33,12 +33,13 @@ function Search(props)
                     <Card className="m-3">
                         <Card.Body>
                             <Row>
-                                {searchArticles.map( (article) =>
-                                    <Col sm={12} md={6} lg={6} >
+                                {searchArticles.map( (article, i) =>
+                                    <Col sm={12} md={6} lg={6} key={i} >
                                         <Article
                                             inFeed={true}
                                             article={article}
-                                            saveArticle={props.saveArticle} />
+                                            saveArticle={props.saveArticle}
+                                            key={i} />
                                     </Col>
                                 ) }
                             </Row>
