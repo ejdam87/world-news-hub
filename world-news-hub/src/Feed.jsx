@@ -8,40 +8,29 @@ function Feed(props)
 {
 
     const [feedArticles, setFeedArticles] = useState( [] );
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const getData = async () => {
-        try
+        setLoading(true);
+        const newArticles = await props.fetchArticles("language=en");
+        if (newArticles == [])
         {
-            const newArticles = await props.fetchArticles("language=en");
-            setFeedArticles(newArticles);
-            setLoading(false);
-            return true;
-        }
-        catch (e)
-        {
-            setFeedArticles([]);
-            setLoading(false);
+            toastr.error("Failed to fetch the articles!");
             return false;
         }
+        else
+        {
+            setFeedArticles(newArticles);
+            toastr.success("Successfully fetched!");
+        }
+
+        setLoading(false);
+        return true;
     }
 
     useEffect(()=> {
         getData();
     }, []);
-
-    const handleRefresh = async () => {
-        setLoading(true);
-        const status = await getData();
-        if (status == true)
-        {
-            toastr.success("Successfully refreshed!");
-        }
-        else
-        {
-            toastr.error("Failed to fetch the articles!");
-        }
-    }
 
     return (
         <Container className="text-center">
@@ -65,7 +54,7 @@ function Feed(props)
                 </Row>
                 <Row>
                     <Col>
-                        <Button variant="outline-dark" className="mb-3" onClick={handleRefresh}>Refresh the feed</Button>
+                        <Button variant="outline-dark" className="mb-3" onClick={getData}>Refresh the feed</Button>
                     </Col>
                 </Row>
             </>}

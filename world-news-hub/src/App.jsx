@@ -30,6 +30,7 @@ function App() {
                     headers: {
                         "Authorization": `Bearer ${HUGGINGFACE_TOKEN}`,
                         "Content-Type" : "application/json",
+                        "x-wait-for-model": "true"
                     },
                     method: "POST",
                     body: JSON.stringify(data),
@@ -71,29 +72,42 @@ function App() {
     }
 
     const fetchArticles = async (q) => {
-        const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&${q}`);
-        const data = await res.json();
-
-        const sentiments = [];
-        for (let i = 0; i < data["results"].length; i++)
+        try
         {
-            const sent = await fetchSentiment( data["results"][i]["title"] );
-            sentiments.push( sent );
+            const res = await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_TOKEN}&${q}`);
+
+            if (!res.ok)
+            {
+                return [];
+            }
+
+            const data = await res.json();
+    
+            const sentiments = [];
+            for (let i = 0; i < data["results"].length; i++)
+            {
+                const sent = await fetchSentiment( data["results"][i]["title"] );
+                sentiments.push( sent );
+            }
+    
+            const newArticles = data["results"].map( (item, i) => ({
+                "title" : item["title"],
+                "description" : item["description"],
+                "image_url" : item["image_url"],
+                "country" : item["country"],
+                "category": item["category"],
+                "language": item["language"],
+                "source_name" : item["source_name"],
+                "link" : item["link"],
+                "sentiment" : sentiments[i]
+            }));
+    
+            return newArticles;
         }
-
-        const newArticles = data["results"].map( (item, i) => ({
-            "title" : item["title"],
-            "description" : item["description"],
-            "image_url" : item["image_url"],
-            "country" : item["country"],
-            "category": item["category"],
-            "language": item["language"],
-            "source_name" : item["source_name"],
-            "link" : item["link"],
-            "sentiment" : sentiments[i]
-        }));
-
-        return newArticles;
+        catch (e)
+        {
+            return [];
+        }
     }
 
     const getSavedArticles = async () => {
@@ -105,6 +119,11 @@ function App() {
                     'X-Access-Key': JSONBIN_TOKEN
                 }
             });
+            
+            if (!res.ok)
+            {
+                return false;
+            }
 
             const json = await res.json();
             setSavedArticles(json.record.saved_articles);
@@ -131,15 +150,14 @@ function App() {
                 },
                 body: JSON.stringify({ saved_articles: articles })
             });
-            if (res.ok)
-            {
-                setSavedArticles(articles);
-                return true;
-            }
-            else
+
+            if (!res.ok)
             {
                 return false;
             }
+
+            setSavedArticles(articles);
+            return true;
         }
         catch(e)
         {
