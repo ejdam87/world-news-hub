@@ -29,7 +29,7 @@ function Home()
                         </Row>
 
                         <Row style={{ textAlign: 'justify' }} className="m-2">
-                            <Accordion defaultActiveKey="0">
+                            <Accordion>
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header>Scrolling the feed</Accordion.Header>
                                     <Accordion.Body>
