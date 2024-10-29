@@ -1,46 +1,57 @@
-import React, {useState} from "react";
+import React, {useState, useMemo} from "react";
 import Article from "./Article.jsx";
-import {Container, Row, Col, Card, Accordion, Dropdown, DropdownButton} from "react-bootstrap";
+import {Container, Row, Col, Card, Accordion, Dropdown, DropdownButton, Spinner} from "react-bootstrap";
+
+import "./AccordionColors.css";
 
 function Storage(props)
 {
 
-    const [articleGroups, setArticleGroups] = useState( {"Articles": props.savedArticles} );
+    const [groupAttribute, setGroupAttribute] = useState( "noGroup" );
+    const [loading, setLoading] = useState(false);
 
-    const groupBy = (attr) => {
-            const groups = {};
+    const groupArticles = () => {
+        const groups = {};
 
-            if (attr == "noGroup")
-            {
-                setArticleGroups({"Articles" : props.savedArticles});
-                return;
-            }
-
-            for (let obj of props.savedArticles)
-            {
-                const article = obj["content"];
-
-                if (!groups[article[attr]])
-                {
-                    groups[article[attr]] = [];
-                }
-                groups[article[attr]].push( obj );
-            }
-
-            setArticleGroups(groups);
+        if (groupAttribute == "noGroup")
+        {
+            return {"Articles" : [...Array( props.savedArticles.length ).keys()]};
         }
 
-    const deleteArticleStorage = async (index) =>
-    {
-        const group = index[0];
-        const i = index[1];
+        for (let i = 0; i < props.savedArticles.length; i++)
+        {
+            const article = props.savedArticles[i]["content"];
+            
+            let vals = article[groupAttribute];
+            if (!Array.isArray(article[groupAttribute]))
+            {
+                vals = [ article[groupAttribute] ];
+            }
 
-        articleGroups[group].splice( i, 1 );
-        setArticleGroups(articleGroups);
+            for (let val of vals)
+            {
+                if (!groups[val])
+                {
+                    groups[val] = [];
+                }
+                groups[val].push(i);
+            }
+        }
 
-        const res = await props.deleteArticle( props.savedArticles.indexOf(articleGroups[group][i]) );
-        return res;
+        if (Object.keys(groups).length == 0)
+        {
+            return {"Articles" : [...Array( props.savedArticles.length ).keys()]};
+        }
+
+        return groups;
     }
+
+    const articleGroups = useMemo( () => {
+        setLoading(true);
+        const groups = groupArticles();
+        setLoading(false);
+        return groups;
+    }, [props.savedArticles, groupAttribute]);
 
     return (
         <Container>
@@ -50,8 +61,8 @@ function Storage(props)
                 </Card.Header>
                 <Card.Body>
                     <Row>
-                        <Col>
-                            <DropdownButton variant="outline-dark" title="Group by" onSelect={(attr)=>groupBy(attr)}>
+                        <Col className="d-flex justify-content-center mb-3">
+                            <DropdownButton variant="outline-dark" title="Group by" onSelect={(attr)=>{setGroupAttribute(attr)}}>
                                 <Dropdown.Item eventKey="noGroup">No groups</Dropdown.Item>
                                 {props.savedArticles.length == 0 ?
                                     <></>
@@ -65,22 +76,34 @@ function Storage(props)
                             </DropdownButton>
                         </Col>
                     </Row>
-                    <Accordion>
-                        {Object.keys(articleGroups).map( (group, i) =>
-                            <Accordion.Item eventKey={i}>
-                                <Accordion.Header>{group}</Accordion.Header>
-                                <Accordion.Body>
-                                    {articleGroups[group].map( (article_w_metadata, j) =>
-                                        <Article
-                                            inFeed={false}
-                                            article={article_w_metadata["content"]}
-                                            metadata={article_w_metadata["metadata"]}
-                                            index={[group, j]}
-                                            deleteArticleStorage={deleteArticleStorage} />) }
-                                </Accordion.Body>
-                            </Accordion.Item>
-                            ) }
-                    </Accordion>
+                    {loading ?
+                        <Row className="align-items-center">
+                            <Col className="text-center">
+                                <Spinner className="mt-3" animation="grow" size="xl" />
+                            </Col>
+                        </Row>
+                        :
+                        <Accordion>
+                            {Object.keys(articleGroups).map( (group, i) =>
+                                <Accordion.Item eventKey={i}>
+                                    <Accordion.Header>{group}</Accordion.Header>
+                                    <Accordion.Body>
+                                        <Row>
+                                            {articleGroups[group].map( (j, k) =>
+                                                <Col sm={12} md={6} lg={6} >
+                                                    <Article
+                                                        inFeed={false}
+                                                        article={props.savedArticles[j]["content"]}
+                                                        metadata={props.savedArticles[j]["metadata"]}
+                                                        index={j}
+                                                        deleteArticle={props.deleteArticle} />
+                                                </Col>
+                                            ) }
+                                        </Row>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                                ) }
+                        </Accordion>}
                 </Card.Body>
             </Card>
         </Container>

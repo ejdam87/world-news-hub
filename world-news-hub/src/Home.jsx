@@ -7,6 +7,7 @@ import InstagramIm from './images/instagram.png';
 import MailIm from './images/mail.png';
 
 import "./Home.css";
+import "./AccordionColors.css";
 
 function Home()
 {

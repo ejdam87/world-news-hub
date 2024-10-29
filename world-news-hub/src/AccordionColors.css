@@ -1,0 +1,14 @@
+.accordion-button:not(.collapsed)
+{
+    background-color: lightgrey;
+}
+
+.accordion-button:hover
+{
+    background-color: lightgrey;
+}
+
+.accordion-button:focus
+{
+    box-shadow: none;
+}
