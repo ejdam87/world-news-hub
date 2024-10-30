@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Nav, Container, ToggleButton, ButtonGroup } from "react-bootstrap";
+import { useTranslation } from  "react-i18next";
+import { changeLanguage } from "i18next";
+
 import './litera.bootstrap.min.css';
 
 import Home from "./Home.jsx";
@@ -12,7 +13,14 @@ import Storage from "./Storage.jsx";
 
 function App() {
 
+    const { t, i18n } = useTranslation();
     const [savedArticles, setSavedArticles] = useState( [] );
+    const [selectedlang, setSelectedLang] = useState("en");
+
+    const langs = [
+        { name: 'English', value: 'en' },
+        { name: 'Spanish', value: 'es' }
+    ];
 
     const JSONBIN_TOKEN = import.meta.env.VITE_JSONBIN_TOKEN;
     const HUGGINGFACE_TOKEN = import.meta.env.VITE_HUGGINGFACE_TOKEN;
@@ -175,26 +183,42 @@ function App() {
         const res = await saveArticles(newArticles);
         return res;
     }
-
-  return (<Router>
-          <Navbar className="navbar navbar-expand-lg bg-body-tertiary">
-            <Container>
-              <Navbar.Brand as={Link} to="/">World news hub</Navbar.Brand>
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/">Home</Nav.Link>
-                <Nav.Link as={Link} to="/feed">Feed</Nav.Link>
-                <Nav.Link as={Link} to="/search">Search</Nav.Link>
-                <Nav.Link as={Link} to="/Storage">Storage</Nav.Link>
-              </Nav>
-            </Container>
-          </Navbar>
-            <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/feed" element={<Feed fetchArticles={fetchArticles} saveArticle={saveArticle} />} />
-                  <Route path="/search" element={<Search fetchArticles={fetchArticles} saveArticle={saveArticle} />} />
-                  <Route path="/storage" element={<Storage deleteArticle={deleteArticle} savedArticles={savedArticles} />} />
-            </Routes>
-        </Router>
+    
+    return (<Router>
+                <Navbar className="navbar navbar-expand-lg bg-body-tertiary">
+                    <Container>
+                        <Navbar.Brand as={Link} to="/">{t("World news hub")}</Navbar.Brand>
+                        <Nav className="me-auto">
+                            <Nav.Link as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/feed">Feed</Nav.Link>
+                            <Nav.Link as={Link} to="/search">Search</Nav.Link>
+                            <Nav.Link as={Link} to="/Storage">Storage</Nav.Link>
+                        </Nav>
+                        <ButtonGroup>
+                            {langs.map((lang, idx) => (
+                                <ToggleButton
+                                    key={idx}
+                                    id={`radio-${idx}`}
+                                    type="radio"
+                                    variant={"outline-dark"}
+                                    name="radio"
+                                    value={lang.value}
+                                    checked={selectedlang === lang.value}
+                                    onChange={(e) => {changeLanguage(e.currentTarget.value); setSelectedLang(e.currentTarget.value);}}
+                                >
+                                    {lang.name}
+                                </ToggleButton>
+                            ))}
+                        </ButtonGroup>
+                    </Container>
+                </Navbar>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/feed" element={<Feed fetchArticles={fetchArticles} saveArticle={saveArticle} />} />
+                    <Route path="/search" element={<Search fetchArticles={fetchArticles} saveArticle={saveArticle} />} />
+                    <Route path="/storage" element={<Storage deleteArticle={deleteArticle} savedArticles={savedArticles} />} />
+                </Routes>
+            </Router>
   )
 }
 
