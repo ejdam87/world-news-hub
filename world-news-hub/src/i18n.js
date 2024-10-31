@@ -77,7 +77,8 @@ const resources = {
             "Science": "Science",
             "Technology": "Technology",
             "Top": "Top",
-            "Tourism": "Tourism"
+            "Tourism": "Tourism",
+            "You are allowed to select at most 5 options from each selection!": "You are allowed to select at most 5 options from each selection!"
         }
     },
     es: {
@@ -155,7 +156,8 @@ const resources = {
             "Science": "Ciencia",
             "Technology": "Tecnología",
             "Top": "Arriba",
-            "Tourism": "Turismo"
+            "Tourism": "Turismo",
+            "You are allowed to select at most 5 options from each selection!": "Puedes seleccionar como máximo 5 opciones de cada selección!"
         }
     }
 };

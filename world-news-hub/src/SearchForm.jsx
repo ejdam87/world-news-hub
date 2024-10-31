@@ -13,13 +13,13 @@ function SearchForm(props)
 
     const LANG_MAP = {"English" : "en", "Dutch" : "nl", "Chinese" : "zh", "French" : "fr",
                       "Finnish": "fi", "German": "de", "Japanese": "jp", "Spanish" : "es"};
-    
+
     const LANGS = Object.keys(LANG_MAP).map( (l) => { return {"name": l, "val": LANG_MAP[l]} } );
 
     const COUNTRY_MAP = {"Australia" : "au", "Brazil" : "br", "Canada" : "ca",
                          "China" : "cn", "Finland" : "fi", "France" : "fr", "Germany" : "de",
                          "Japan" : "jp", "Netherlands" : "nl", "Spain" : "es",
-                         "United States of America" : "us", "United Kingdom" : "uk", "World" : "wo"};
+                         "United States of America" : "us", "United Kingdom" : "gb", "World" : "wo"};
 
     const COUNTRIES = Object.keys(COUNTRY_MAP).map( (c) => { return {"name": c, "val": COUNTRY_MAP[c]} } );
 
@@ -39,7 +39,6 @@ function SearchForm(props)
 
         const qWords = queryString.split(" ").filter( (w) => w != "" );
         const qWordQuery = qWords.length == 0 ? "": "q=" + qWords.join("%20");
-        setQueryString("");
 
         const slangs = selectedLangs.map( (l) => l["val"] );
         const languageQuery = slangs.length == 0 ? "" : "language=" + slangs.join(",");
@@ -50,19 +49,24 @@ function SearchForm(props)
         const scategories = selectedCategories.map( (c) => c["val"] )
         const categoryQuery = scategories.length == 0 ? "" : "category=" + scategories.join(",");
 
+        if (selectedCategories.length > 5 || selectedCountries.length > 5 || selectedLangs.length > 5)
+        {
+            toastr.warning(t("You are allowed to select at most 5 options from each selection!"));
+            return false;
+        }
+
         const query = [ qWordQuery, languageQuery, countryQuery, categoryQuery ].filter( (q) => q != "" ).join("&");
+        setQueryString("");
 
         try
         {
             const newArticles = await props.fetchArticles(query);
             props.setSearchArticles(newArticles);
-            props.setLoading(false);
             return true;
         }
         catch (e)
         {
             console.log(e);
-            props.setLoading(false);
             return false;
         }
     }
@@ -70,6 +74,7 @@ function SearchForm(props)
     const handleSubmitClick = async (e) => {
         props.setLoading(true);
         const status = await handleSubmit(e);
+        props.setLoading(false);
         if (status == true)
         {
             toastr.success(t("Found articles!"));
