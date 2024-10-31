@@ -3,9 +3,12 @@ import FeedArticles from "./FeedArticles.jsx"
 import { Container, Button, Row, Col, Spinner } from 'react-bootstrap';
 import 'toastr/build/toastr.min.css';
 import toastr from 'toastr';
+import { useTranslation } from  "react-i18next";
+
 
 function Feed(props)
 {
+    const { t, i18n } = useTranslation();
 
     const [feedArticles, setFeedArticles] = useState( [] );
     const [loading, setLoading] = useState(false);
@@ -15,13 +18,13 @@ function Feed(props)
         const newArticles = await props.fetchArticles("language=en");
         if (newArticles == [])
         {
-            toastr.error("Failed to fetch the articles!");
+            toastr.error(t("Failed to fetch the articles!"));
             return false;
         }
         else
         {
             setFeedArticles(newArticles);
-            toastr.success("Successfully fetched!");
+            toastr.success(t("Found articles!"));
         }
 
         setLoading(false);
@@ -36,7 +39,7 @@ function Feed(props)
         <Container className="text-center">
             <Row>
                 <Col>
-                    <h1 className="m-2">Article feed</h1>
+                    <h1 className="m-2">{t("Article feed")}</h1>
                 </Col>
             </Row>
             {loading ?
@@ -54,7 +57,7 @@ function Feed(props)
                 </Row>
                 <Row>
                     <Col>
-                        <Button variant="outline-dark" className="mb-3" onClick={getData}>Refresh the feed</Button>
+                        <Button variant="outline-dark" className="mb-3" onClick={getData}>{t("Refresh the feed")}</Button>
                     </Col>
                 </Row>
             </>}

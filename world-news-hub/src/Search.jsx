@@ -1,12 +1,13 @@
 import React, {useState} from "react"
 import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
+import { useTranslation } from  "react-i18next";
 
 import SearchForm from "./SearchForm";
 import Article from "./Article";
 
 function Search(props)
 {
-
+    const { t, i18n } = useTranslation();
     const [searchArticles, setSearchArticles] = useState( [] );
     const [loading, setLoading] = useState(false);
 
@@ -15,7 +16,7 @@ function Search(props)
             <Card className="mt-3">
                 <Card.Header>
                     <Card.Title as="h1" className="text-center">
-                        Advanced searching
+                        {t("Advanced searching")}
                     </Card.Title>
                 </Card.Header>
                 <Card.Body>

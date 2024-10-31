@@ -3,24 +3,31 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import Multiselect from 'multiselect-react-dropdown';
 import 'toastr/build/toastr.min.css';
 import toastr from 'toastr';
+import { useTranslation } from  "react-i18next";
 
 import "./SearchForm.css";
 
 function SearchForm(props)
 {
-    const LANG_MAP = {"English" : "en", "Dutch" : "nl", "Chinese" : "zl", "French" : "fr",
+    const { t, i18n } = useTranslation();
+
+    const LANG_MAP = {"English" : "en", "Dutch" : "nl", "Chinese" : "zh", "French" : "fr",
                       "Finnish": "fi", "German": "de", "Japanese": "jp", "Spanish" : "es"};
     
+    const LANGS = Object.keys(LANG_MAP).map( (l) => { return {"name": l, "val": LANG_MAP[l]} } );
+
     const COUNTRY_MAP = {"Australia" : "au", "Brazil" : "br", "Canada" : "ca",
                          "China" : "cn", "Finland" : "fi", "France" : "fr", "Germany" : "de",
                          "Japan" : "jp", "Netherlands" : "nl", "Spain" : "es",
                          "United States of America" : "us", "United Kingdom" : "uk", "World" : "wo"};
 
-    const LANGS = Object.keys(LANG_MAP);
-    const COUNTRIES = Object.keys(COUNTRY_MAP);
+    const COUNTRIES = Object.keys(COUNTRY_MAP).map( (c) => { return {"name": c, "val": COUNTRY_MAP[c]} } );
 
-    const CATEGORIES = ["Business", "Crime", "Education", "Food", "Health",
-                        "Politics", "Sports", "Science", "Technology", "Top", "Tourism"];
+    const CATEGORY_MAP = {"Business": "business", "Crime": "crime", "Education": "education", "Food": "food",
+                          "Health": "health", "Politics": "politics", "Sports": "sports", "Science": "science",
+                          "Technology": "technology", "Top": "top", "Tourism": "tourism"}
+
+    const CATEGORIES = Object.keys(CATEGORY_MAP).map( (c) => { return {"name": c, "val": CATEGORY_MAP[c]} } );
 
     const [queryString, setQueryString] = useState("");
     const [selectedLangs, setSelectedLangs] = useState([]);
@@ -32,14 +39,15 @@ function SearchForm(props)
 
         const qWords = queryString.split(" ").filter( (w) => w != "" );
         const qWordQuery = qWords.length == 0 ? "": "q=" + qWords.join("%20");
+        setQueryString("");
 
-        const slangs = selectedLangs.map( (l) => LANG_MAP[l] );
+        const slangs = selectedLangs.map( (l) => l["val"] );
         const languageQuery = slangs.length == 0 ? "" : "language=" + slangs.join(",");
 
-        const scountries = selectedCountries.map( (c) => COUNTRY_MAP[c] )
+        const scountries = selectedCountries.map( (c) => c["val"] )
         const countryQuery = scountries.length == 0 ? "" : "country=" + scountries.join(",");
 
-        const scategories = selectedCategories.map( (c) => c.charAt(0).toLowerCase() + c.slice(1) )
+        const scategories = selectedCategories.map( (c) => c["val"] )
         const categoryQuery = scategories.length == 0 ? "" : "category=" + scategories.join(",");
 
         const query = [ qWordQuery, languageQuery, countryQuery, categoryQuery ].filter( (q) => q != "" ).join("&");
@@ -64,11 +72,11 @@ function SearchForm(props)
         const status = await handleSubmit(e);
         if (status == true)
         {
-            toastr.success("Found articles!");
+            toastr.success(t("Found articles!"));
         }
         else
         {
-            toastr.error("Failed to fetch the articles!");
+            toastr.error(t("Failed to fetch the articles!"));
         }
     }
 
@@ -77,22 +85,23 @@ function SearchForm(props)
             <Row>
                 <Col>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Search query</Form.Label>
+                        <Form.Label>{t("Search query")}</Form.Label>
                         <Form.Control
                             onChange={(e) => setQueryString(e.target.value)}
+                            value={queryString}
                             type="text"
-                            placeholder="Enter a sequence of keywords separated by space" />
+                            placeholder={t("Enter a sequence of keywords separated by space")} />
                     </Form.Group>
                 </Col>
             </Row>
             <Row>
                 <Col sm={12} md={4} lg={4}>
                     <Form.Group>
-                        <Form.Label>Country</Form.Label>
+                        <Form.Label>{t("Country")}</Form.Label>
                         <Multiselect
-                            isObject={false}
-                            options={COUNTRIES}
-                            placeholder="Select countries"
+                            options={COUNTRIES.map( (entry) => { return {"name": t(entry["name"]), "val": entry["val"]} } )}
+                            displayValue="name"
+                            placeholder={t("Select countries")}
                             showArrow={true}
                             onSelect={ (sl, _) => { setSelectedCountries( sl ) } }
                             onRemove={ (sl, _) => { setSelectedCountries( sl ) } }
@@ -102,11 +111,11 @@ function SearchForm(props)
 
                 <Col sm={12} md={4} lg={4}>
                     <Form.Group>
-                        <Form.Label>Category</Form.Label>
+                        <Form.Label>{t("Category")}</Form.Label>
                         <Multiselect
-                            isObject={false}
-                            options={CATEGORIES}
-                            placeholder="Select categories"
+                            options={CATEGORIES.map( (entry) => { return {"name": t(entry["name"]), "val": entry["val"]} } )}
+                            displayValue="name"
+                            placeholder={t("Select categories")}
                             showArrow={true}
                             onSelect={ (sl, _) => { setSelectedCategories( sl ) } }
                             onRemove={ (sl, _) => { setSelectedCategories( sl ) } }
@@ -116,11 +125,11 @@ function SearchForm(props)
 
                 <Col sm={12} md={4} lg={4}>
                 <Form.Group>
-                    <Form.Label>Language</Form.Label>
+                    <Form.Label>{t("Language")}</Form.Label>
                     <Multiselect
-                        isObject={false}
-                        options={LANGS}
-                        placeholder="Select languages"
+                        options={LANGS.map( (entry) => { return {"name": t(entry["name"]), "val": entry["val"]} } )}
+                        displayValue="name"
+                        placeholder={t("Select languages")}
                         showArrow={true}
                         onSelect={ (sl, _) => { setSelectedLangs( sl ) } }
                         onRemove={ (sl, _) => { setSelectedLangs( sl ) } }
@@ -132,7 +141,7 @@ function SearchForm(props)
             <Row>
                 <Col className="text-center">
                     <Button className="mt-3" variant="outline-dark" size="lg" type="submit">
-                        Search
+                        {t("Search")}
                     </Button>
                 </Col>
             </Row>

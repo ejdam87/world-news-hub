@@ -1,6 +1,6 @@
 import React from "react"
 import { Card, Button } from 'react-bootstrap';
-
+import { useTranslation } from  "react-i18next";
 import 'toastr/build/toastr.min.css';
 import toastr from 'toastr';
 
@@ -9,6 +9,8 @@ import "./Article.css";
 
 function Article(props)
 {
+    const { t, i18n } = useTranslation();
+
     const capitalize = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -29,11 +31,11 @@ function Article(props)
         const res = await props.saveArticle( cargo );
         if (res == true)
         {
-            toastr.success("Article successfully saved!");
+            toastr.success(t("Article successfully saved!"));
         }
         else
         {
-            toastr.error("Article saving failed!");
+            toastr.error(t("Article saving failed!"));
         }
     }
 
@@ -41,11 +43,11 @@ function Article(props)
         const res = await props.deleteArticle( props.index );
         if (res == true)
         {
-            toastr.success("Article successfully deleted!");
+            toastr.success(t("Article successfully deleted!"));
         }
         else
         {
-            toastr.error("Article deletion failed!");
+            toastr.error(t("Article deletion failed!"));
         }
     }
 
@@ -53,13 +55,13 @@ function Article(props)
                 <Card.Header as="h5">
                     {
                     props.inFeed ? 
-                    <Button variant="outline-dark" onClick={handleSave}>Save the article</Button>
+                    <Button variant="outline-dark" onClick={handleSave}>{t("Save the article")}</Button>
                     :
-                    <Button variant="outline-dark" onClick={handleDelete}>Delete the article</Button>
+                    <Button variant="outline-dark" onClick={handleDelete}>{t("Delete the article")}</Button>
                     }
                 </Card.Header>
-                {props.inFeed ? <></> : <Card.Text className="mt-1"> Saved at: {props.metadata["time"]} </Card.Text>}
-                <Card.Text className="mt-2"> Sentiment : {props.article["sentiment"]} </Card.Text>
+                {props.inFeed ? <></> : <Card.Text className="mt-1"> {t("Saved at")}: {props.metadata["time"]} </Card.Text>}
+                <Card.Text className="mt-2"> {t("Sentiment")} : {props.article["sentiment"]} </Card.Text>
                 <Card.Img
                     className="article-image"
                     variant="top"
@@ -68,7 +70,9 @@ function Article(props)
                 <Card.Body>
                     <Card.Title>{props.article["title"]}</Card.Title>
                     <Card.Text>{props.article["description"]}</Card.Text>
-                    <Card.Text> {props.article["country"].map( (c) => capitalize(c) ).join(",")} | {props.article["source_name"]} | <Card.Link target="_blank" href={props.article["link"]}>Full article here</Card.Link> </Card.Text>
+                    <Card.Text>
+                        {props.article["country"].map( (c) => capitalize(c) ).join(",")} | {props.article["source_name"]} | <Card.Link target="_blank" href={props.article["link"]}>{t("Full article here")}</Card.Link>
+                    </Card.Text>
                 </Card.Body>
             </Card>
             )

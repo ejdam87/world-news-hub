@@ -183,16 +183,16 @@ function App() {
         const res = await saveArticles(newArticles);
         return res;
     }
-    
+
     return (<Router>
                 <Navbar className="navbar navbar-expand-lg bg-body-tertiary">
                     <Container>
                         <Navbar.Brand as={Link} to="/">{t("World news hub")}</Navbar.Brand>
                         <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/">Home</Nav.Link>
-                            <Nav.Link as={Link} to="/feed">Feed</Nav.Link>
-                            <Nav.Link as={Link} to="/search">Search</Nav.Link>
-                            <Nav.Link as={Link} to="/Storage">Storage</Nav.Link>
+                            <Nav.Link as={Link} to="/">{t("Home")}</Nav.Link>
+                            <Nav.Link as={Link} to="/feed">{t("Feed")}</Nav.Link>
+                            <Nav.Link as={Link} to="/search">{t("Search")}</Nav.Link>
+                            <Nav.Link as={Link} to="/Storage">{t("Storage")}</Nav.Link>
                         </Nav>
                         <ButtonGroup>
                             {langs.map((lang, idx) => (
@@ -206,7 +206,7 @@ function App() {
                                     checked={selectedlang === lang.value}
                                     onChange={(e) => {changeLanguage(e.currentTarget.value); setSelectedLang(e.currentTarget.value);}}
                                 >
-                                    {lang.name}
+                                    {t(lang.name)}
                                 </ToggleButton>
                             ))}
                         </ButtonGroup>

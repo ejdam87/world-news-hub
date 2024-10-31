@@ -1,11 +1,14 @@
 import React, {useState, useMemo} from "react";
 import Article from "./Article.jsx";
 import {Container, Row, Col, Card, Accordion, Dropdown, DropdownButton, Spinner} from "react-bootstrap";
+import { useTranslation } from  "react-i18next";
 
 import "./AccordionColors.css";
 
 function Storage(props)
 {
+
+    const { t, i18n } = useTranslation();
 
     const capitalize = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -19,7 +22,7 @@ function Storage(props)
 
         if (groupAttribute == "noGroup")
         {
-            return {"Articles" : [...Array( props.savedArticles.length ).keys()]};
+            return {"Articles": [...Array( props.savedArticles.length ).keys()]};
         }
 
         for (let i = 0; i < props.savedArticles.length; i++)
@@ -44,7 +47,7 @@ function Storage(props)
 
         if (Object.keys(groups).length == 0)
         {
-            return {"Articles" : [...Array( props.savedArticles.length ).keys()]};
+            return {"Articles": [...Array( props.savedArticles.length ).keys()]};
         }
 
         return groups;
@@ -61,21 +64,21 @@ function Storage(props)
         <Container>
             <Card className="m-3">
                 <Card.Header>
-                    <Card.Title as="h1" className="text-center mt-2"> Saved articles </Card.Title>
+                    <Card.Title as="h1" className="text-center mt-2">{t("Saved articles")}</Card.Title>
                 </Card.Header>
                 <Card.Body>
                     <Row>
                         <Col className="d-flex justify-content-center mb-3">
-                            <DropdownButton variant="outline-dark" title="Group by" onSelect={(attr)=>{setGroupAttribute(attr)}}>
-                                <Dropdown.Item eventKey="noGroup">No groups</Dropdown.Item>
+                            <DropdownButton variant="outline-dark" title={t("Group by")} onSelect={(attr)=>{setGroupAttribute(attr)}}>
+                                <Dropdown.Item eventKey="noGroup">{t("No groups")}</Dropdown.Item>
                                 {props.savedArticles.length == 0 ?
                                     <></>
                                     :
                                     <>
-                                        <Dropdown.Item eventKey="country">Country</Dropdown.Item>
-                                        <Dropdown.Item eventKey="category">Category</Dropdown.Item>
-                                        <Dropdown.Item eventKey="language">Language</Dropdown.Item>
-                                        <Dropdown.Item eventKey="sentiment">Sentiment</Dropdown.Item>
+                                        <Dropdown.Item eventKey="country">{t("Country")}</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category">{t("Category")}</Dropdown.Item>
+                                        <Dropdown.Item eventKey="language">{t("Language")}</Dropdown.Item>
+                                        <Dropdown.Item eventKey="sentiment">{t("Sentiment")}</Dropdown.Item>
                                     </>
                                 }
                             </DropdownButton>
