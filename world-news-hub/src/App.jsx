@@ -185,31 +185,34 @@ function App() {
     }
 
     return (<Router>
-                <Navbar className="navbar navbar-expand-lg bg-body-tertiary">
+                <Navbar expand="md" className="navbar navbar-expand-lg bg-body-tertiary">
                     <Container>
                         <Navbar.Brand as={Link} to="/">{t("World news hub")}</Navbar.Brand>
-                        <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/">{t("Home")}</Nav.Link>
-                            <Nav.Link as={Link} to="/feed">{t("Feed")}</Nav.Link>
-                            <Nav.Link as={Link} to="/search">{t("Search")}</Nav.Link>
-                            <Nav.Link as={Link} to="/Storage">{t("Storage")}</Nav.Link>
-                        </Nav>
-                        <ButtonGroup>
-                            {langs.map((lang, idx) => (
-                                <ToggleButton
-                                    key={idx}
-                                    id={`radio-${idx}`}
-                                    type="radio"
-                                    variant={"outline-dark"}
-                                    name="radio"
-                                    value={lang.value}
-                                    checked={selectedlang === lang.value}
-                                    onChange={(e) => {changeLanguage(e.currentTarget.value); setSelectedLang(e.currentTarget.value);}}
-                                >
-                                    {t(lang.name)}
-                                </ToggleButton>
-                            ))}
-                        </ButtonGroup>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link as={Link} to="/">{t("Home")}</Nav.Link>
+                                <Nav.Link as={Link} to="/feed">{t("Feed")}</Nav.Link>
+                                <Nav.Link as={Link} to="/search">{t("Search")}</Nav.Link>
+                                <Nav.Link as={Link} to="/Storage">{t("Storage")}</Nav.Link>
+                            </Nav>
+                            <ButtonGroup>
+                                {langs.map((lang, idx) => (
+                                    <ToggleButton
+                                        key={idx}
+                                        id={`radio-${idx}`}
+                                        type="radio"
+                                        variant={"outline-dark"}
+                                        name="radio"
+                                        value={lang.value}
+                                        checked={selectedlang === lang.value}
+                                        onChange={(e) => {changeLanguage(e.currentTarget.value); setSelectedLang(e.currentTarget.value);}}
+                                    >
+                                        {t(lang.name)}
+                                    </ToggleButton>
+                                ))}
+                            </ButtonGroup>
+                        </Navbar.Collapse>
                     </Container>
                 </Navbar>
                 <Routes>
