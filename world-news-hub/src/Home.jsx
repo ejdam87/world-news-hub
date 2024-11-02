@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import {Card, Col, Row, Image, Container, Button, Accordion} from "react-bootstrap";
+import { Card, Col, Row, Image, Container, Button, Accordion } from "react-bootstrap";
 import { useTranslation } from  "react-i18next";
+
 import GithubIm from './images/github.png';
 import InstagramIm from './images/instagram.png';
 import MailIm from './images/mail.png';

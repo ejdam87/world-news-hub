@@ -1,6 +1,6 @@
-import React, {useState, useMemo} from "react";
+import React, { useState, useMemo } from "react";
 import Article from "./Article.jsx";
-import {Container, Row, Col, Card, Accordion, Dropdown, DropdownButton, Spinner} from "react-bootstrap";
+import { Container, Row, Col, Card, Accordion, Dropdown, DropdownButton, Spinner } from "react-bootstrap";
 import { useTranslation } from  "react-i18next";
 
 import "./AccordionColors.css";

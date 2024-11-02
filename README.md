@@ -1,5 +1,5 @@
 # World news hub
-The main idea of the application is to summarize news from across the world and give user the ability to perform searching and storing articles. Each part of the application is described at the "Home" page in great detail.
+The main idea of the application is to summarize news from across the world and give user the ability to perform article searching, storing, and more. Each part of the application is described at the "Home" page in great detail. Also, the application is fully responsive, thus, it can be used on laptop, tablet, or even a smartphone.
 
 ## Development dependencies
 - [Node.js](https://nodejs.org/en) runtime environment

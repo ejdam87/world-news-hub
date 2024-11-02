@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
 import { useTranslation } from  "react-i18next";
 
