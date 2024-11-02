@@ -4,6 +4,7 @@ The main idea of the application is to summarize news from across the world and 
 ## Development dependencies
 - [Node.js](https://nodejs.org/en) runtime environment
     - [Vite.js](https://v2.vitejs.dev/) development server
+
 The application is built using [React.js](https://react.dev/) library. All the project-specific dependencies are listed in `package.json` file. They can be installed using Node package manager (running `npm install` in the root directory of the project).
 
 ## Execution
@@ -15,6 +16,7 @@ The application currently comprises 4 sub-applications:
 - Feed
 - Search
 - Storage
+
 Also, the content is available in (currently) two languages:
 - English
 - Spanish
@@ -33,6 +35,7 @@ This sub-application gives user the ability to perform more advanced searching c
 - A list of countries of origin (at most 5 entries)
 - A list of topic categories (at most 5 entries)
 - A list of article languages (at most 5 entries)
+
 This time, the articles are displayed differently, however, the option to store the articles for later is again available.
 ![Search](./images/search.png)
 
@@ -42,5 +45,6 @@ This sub-application allows user to access previously stored articles. For artic
 - Category (used in picture bellow)
 - Language
 - Sentiment
+
 The idea behind this is to provide a bit of hierarchy to the storage. Finally, it gives user ability to delete the articles from the storage.
 ![Storage](./images/storage.png)
