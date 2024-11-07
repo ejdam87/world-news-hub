@@ -7,6 +7,12 @@ The main idea of the application is to summarize news from across the world and 
 
 The application is built using [React.js](https://react.dev/) library. All the project-specific dependencies are listed in `package.json` file. They can be installed using Node package manager (running `npm install` in the root directory of the project).
 
+Also, you should obtain access token for the following APIs:
+- [HuggingFace](https://huggingface.co/)
+- [NewsAPI](https://newsdata.io/documentation)
+
+Also, you should include these in `.env` file in the root directory of the project.
+
 ## Execution
 Currently, the application is not deployed, thus, there are no transpiled JS files available. The application can be run using Vite development server (running `npm run dev` in the root directory of the project) and then connecting to the server from the web browser.
 
