@@ -7,7 +7,7 @@ The main idea of the application is to summarize news from across the world and 
 
 The application is built using [React.js](https://react.dev/) library. All the project-specific dependencies are listed in `package.json` file. They can be installed using Node package manager (running `npm install` in the root directory of the project).
 
-Also, you should obtain access token for the following APIs:
+Also, you should obtain access tokens for the following APIs:
 - [HuggingFace](https://huggingface.co/)
 - [NewsAPI](https://newsdata.io/documentation)
 
